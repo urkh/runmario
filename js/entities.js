@@ -33,9 +33,9 @@ game.Player = me.ObjectEntity.extend({
             if(col.obj.type == me.game.ACTION_OBJECT){
                 
                 //console.log("col");
-                this.vel.x = 0;
                 me.audio.stopTrack();
-                me.audio.play("lost", false);
+                me.game.remove(this);
+                me.audio.play("lost");
 
             }
         
@@ -60,8 +60,6 @@ game.Player = me.ObjectEntity.extend({
         
         }
 
-        this.updateColRect(10, 48, 1, 60);
-//        this.run();   
     
     },
 
@@ -69,35 +67,40 @@ game.Player = me.ObjectEntity.extend({
 
     roll: function(){
         
-        this.updateColRect(10, 48, 32, 28);
+        this.updateColRect(10, 48, 34, 28);
         this.vel.x = 200;
-        this.renderable.setCurrentAnimation("roll","run");
+        
+        this.renderable.setCurrentAnimation("roll", (
+            function () {
+
+                this.run();
+
+            }).bind(this));
 
  
     },
 
     run: function(){
         
-        this.updateColRect(10, 48, 1, 60);
         this.vel.x = 200;   
+        this.updateColRect(10, 48, 2, 60);
         this.renderable.setCurrentAnimation("run");
-
-
-
+        
     },
 
     jump: function(){
         
         if(!this.jumping && !this.falling){
             
+
             me.audio.play("jump");
             this.renderable.setCurrentAnimation("jump","run");
-
             this.vel.y = -400;
             this.jumping = true;
                 
         }
-
+        
+        this.updateColRect(10, 48, 2, 60);
     
     }
 
@@ -116,6 +119,7 @@ game.Enemy = me.ObjectEntity.extend({
         this.type = me.game.ACTION_OBJECT;
         this.collidable = true;
     
+        this.updateColRect(10, 10, 20, 10);
     }
 
 
