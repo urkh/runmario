@@ -1,4 +1,4 @@
-game.Player = me.ObjectEntity.extend({
+game.Mario = me.ObjectEntity.extend({
     
     init: function(x, y, settings){
 
@@ -33,9 +33,9 @@ game.Player = me.ObjectEntity.extend({
             if(col.obj.type == me.game.ACTION_OBJECT){
                 
                 //console.log("col");
-                me.audio.stopTrack();
+                //me.audio.stopTrack();
                 me.game.remove(this);
-                me.audio.play("lost");
+                //me.audio.play("lost");
 
             }
         
@@ -59,7 +59,6 @@ game.Player = me.ObjectEntity.extend({
             this.roll();
         
         }
-
     
     },
 
@@ -93,7 +92,7 @@ game.Player = me.ObjectEntity.extend({
         if(!this.jumping && !this.falling){
             
 
-            me.audio.play("jump");
+            //me.audio.play("jump");
             this.renderable.setCurrentAnimation("jump","run");
             this.vel.y = -400;
             this.jumping = true;
@@ -110,7 +109,7 @@ game.Player = me.ObjectEntity.extend({
 
 });
 
-
+/*
 game.Enemy = me.ObjectEntity.extend({
 
     init: function(x,y,settings){
@@ -124,3 +123,41 @@ game.Enemy = me.ObjectEntity.extend({
 
 
 });
+
+*/
+
+game.Bowser = me.ObjectEntity.extend({
+
+    init: function(x,y,settings){
+
+        this.parent(x, y, settings);
+        this.type = me.game.ACTION_OBJECT;
+        this.collidable = true;
+    
+        this.updateColRect(10, 10, 20, 10);
+    }
+
+
+});
+
+
+
+game.Coin = me.CollectableEntity.extend({
+    
+    init: function(x, y, settings){
+        
+        this.parent(x, y, settings);
+    
+    },
+
+    onCollision: function(){
+
+        //me.audio.play("coin");
+
+        this.collidable = false;
+        me.game.remove(this);
+    }
+
+});
+
+

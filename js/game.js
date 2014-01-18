@@ -36,8 +36,9 @@ var game = {
         //me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
-        me.entityPool.add("player", game.Player);
-        me.entityPool.add("box", game.Enemy);
+        me.entityPool.add("mario", game.Mario);
+        me.entityPool.add("bowser", game.Bowser);
+        me.entityPool.add("coin", game.Coin);
 
         me.input.bindKey(me.input.KEY.X, "jump", true);
         me.input.bindMouse(me.input.mouse.LEFT, me.input.KEY.X);
