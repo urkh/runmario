@@ -33,9 +33,9 @@ game.Mario = me.ObjectEntity.extend({
             if(col.obj.type == me.game.ACTION_OBJECT){
                 
                 //console.log("col");
-                //me.audio.stopTrack();
+                me.audio.stopTrack();
                 me.game.remove(this);
-                //me.audio.play("lost");
+                me.audio.play("lost");
 
             }
         
@@ -67,7 +67,6 @@ game.Mario = me.ObjectEntity.extend({
     roll: function(){
         
         this.updateColRect(10, 48, 34, 28);
-        this.vel.x = 200;
         
         this.renderable.setCurrentAnimation("roll", (
             function () {
@@ -92,10 +91,10 @@ game.Mario = me.ObjectEntity.extend({
         if(!this.jumping && !this.falling){
             
 
-            //me.audio.play("jump");
+            me.audio.play("jump");
             this.renderable.setCurrentAnimation("jump","run");
-            this.vel.y = -400;
             this.jumping = true;
+            this.vel.y = -400;
                 
         }
         
@@ -152,8 +151,8 @@ game.Coin = me.CollectableEntity.extend({
 
     onCollision: function(){
 
-        //me.audio.play("coin");
-
+        me.audio.play("coin");
+        game.data.score += 50;
         this.collidable = false;
         me.game.remove(this);
     }
