@@ -5,7 +5,6 @@ game.Mario = me.ObjectEntity.extend({
         this.parent(x,y,settings);
 
         this.setVelocity(4,13);
-
         
         this.renderable.addAnimation("run", [0,1,2], 90);
         this.renderable.addAnimation("jump", [3],450);
@@ -18,15 +17,15 @@ game.Mario = me.ObjectEntity.extend({
     },
 
 
-
-    update: function(){
-
-
-        this.handleInput();
+    update: function(dt){
 
 
         this.updateMovement();
-        var col = me.game.collide(this);
+
+        this.handleInput();
+
+        /*
+        var col = me.game.world.collide(this);
 
         if(col){
 
@@ -34,17 +33,20 @@ game.Mario = me.ObjectEntity.extend({
                 
                 //console.log("col");
                 me.audio.stopTrack();
-                me.game.remove(this);
+                me.game.world.removeChild(this);
                 me.audio.play("lost");
 
             }
         
-        }
+        }*/
 
-        this.parent();
-        return true;
+        //this.parent(); 
+        //return true;
+        return this.parent(dt);
         
     },
+
+
 
     handleInput: function(){
  
@@ -66,25 +68,39 @@ game.Mario = me.ObjectEntity.extend({
 
     roll: function(){
         
-        this.updateColRect(10, 48, 34, 28);
+        //this.updateColRect(10, 48, 34, 28);
+        var shape = this.getShape();
+        //shape.pos.x = -10;
+        //shape.pos.y = -10
+        shape.resize(10, 48, 34, 28);
         
         this.renderable.setCurrentAnimation("roll", (
             function () {
 
                 this.run();
 
-            }).bind(this));
+            }
+        ).bind(this));
 
  
     },
 
+    
+
     run: function(){
         
         this.vel.x = 200;   
-        this.updateColRect(10, 48, 2, 60);
+        
+        //this.updateColRect(10, 48, 2, 60);
+        var shape = this.getShape();
+        //shape.pos.x = 10;
+        shape.resize(10, 48, 2, 60);
+
         this.renderable.setCurrentAnimation("run");
         
     },
+
+
 
     jump: function(){
         
@@ -98,7 +114,10 @@ game.Mario = me.ObjectEntity.extend({
                 
         }
         
-        this.updateColRect(10, 48, 2, 60);
+        //this.updateColRect(10, 48, 2, 60);
+        var shape = this.getShape();
+        shape.pos.x = 10;
+        shape.resize(48, shape.height);
     
     }
 
@@ -133,7 +152,10 @@ game.Bowser = me.ObjectEntity.extend({
         this.type = me.game.ACTION_OBJECT;
         this.collidable = true;
     
-        this.updateColRect(10, 10, 20, 10);
+        //this.updateColRect(10, 10, 20, 10);
+        var shape = this.getShape();
+        shape.pos.x = 10;
+        shape.resize(10, shape.height);
     }
 
 
@@ -154,7 +176,7 @@ game.Coin = me.CollectableEntity.extend({
         me.audio.play("coin");
         game.data.score += 50;
         this.collidable = false;
-        me.game.remove(this);
+        me.game.world.removeChild(this);
     }
 
 });

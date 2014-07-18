@@ -16,7 +16,7 @@ var game = {
         if(document.location.hash === "#debug"){
    
             window.onReady(function(){
-                me.plugin.register.defer(debugPanel, "debug");
+                me.plugin.register.defer(this, debugPanel, "debug");
             });           
    
         }
@@ -36,15 +36,15 @@ var game = {
         //me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
 
-        me.entityPool.add("mario", game.Mario);
-        me.entityPool.add("bowser", game.Bowser);
-        me.entityPool.add("coin", game.Coin);
+        me.pool.register("mario", game.Mario);
+        me.pool.register("bowser", game.Bowser);
+        me.pool.register("coin", game.Coin);
 
         me.input.bindKey(me.input.KEY.X, "jump", true);
-        me.input.bindMouse(me.input.mouse.LEFT, me.input.KEY.X);
+        //me.input.bindMouse(me.input.mouse.LEFT, me.input.KEY.X);
 
         me.input.bindKey(me.input.KEY.Z, "roll", true);
-        me.input.bindMouse(me.input.mouse.RIGHT, me.input.KEY.Z);
+        //me.input.bindMouse(me.input.mouse.RIGHT, me.input.KEY.Z);
 
         me.state.change(me.state.PLAY);
     
